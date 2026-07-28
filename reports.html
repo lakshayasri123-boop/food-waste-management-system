@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platform Analytics - FoodWasteDonation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <a href="/admin/dashboard" class="text-success text-decoration-none fw-bold">
+                    <i class="bi bi-arrow-left me-1"></i> Back to Admin Control Center
+                </a>
+                <h2 class="text-white fw-bold mt-2">Platform Activity & Donation Reports</h2>
+            </div>
+            <button onclick="window.print()" class="btn btn-emerald"><i class="bi bi-printer me-2"></i> Print / Export Report</button>
+        </div>
+                            <h2 class="text-white mt-2" th:text="${reports.totalDonations}">0</h2>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="glass-card p-4 text-center">
+                    <span class="text-secondary small">Available Food Items</span>
+                    <h2 class="text-success mt-2" th:text="${reports.availableDonations}">0</h2>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="glass-card p-4 text-center">
+                    <span class="text-secondary small">Successfully Delivered</span>
+                    <h2 class="text-purple mt-2" style="color: #c084fc;" th:text="${reports.deliveredDonations}">0</h2>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="glass-card p-4 text-center">
+                    <span class="text-secondary small">Expired Unclaimed Items</span>
+                    <h2 class="text-danger mt-2" th:text="${reports.expiredDonations}">0</h2>
+                </div>
+            </div>
+        </div>
+        <div class="glass-card p-4">
+            <h4 class="text-white mb-3">Full Donation Audit Log</h4>
+            <div class="table-responsive">
+                <table class="table table-custom mb-0">
+                    <thead>
+                        <tr>
+                            <th>#ID</th>
+                            <th>Food Item</th>
+                            <th>Donor Org</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                            <th>Expiry</th>
+                            <th>Current Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       <tr th:each="d : ${allDonations}">
+                            <td class="fw-bold text-success" th:text="'#' + ${d.donationId}">#1</td>
+                            <td class="text-white" th:text="${d.foodName}">Meals</td>
+                            <td class="text-secondary" th:text="${d.donor.organizationName}">Hotel</td>
+                            <td class="text-secondary" th:text="${d.foodType}">Prepared</td>
+                            <td class="text-light" th:text="${d.quantity}">10</td>
+                            <td class="text-warning" th:text="${#temporals.format(d.expiryTime, 'yyyy-MM-dd HH:mm')}">Date</td>
+                            <td>
+                                <span th:if="${d.status.name() == 'AVAILABLE'}" class="badge badge-status badge-available">AVAILABLE</span>
+                                <span th:if="${d.status.name() == 'ACCEPTED'}" class="badge badge-status badge-accepted">ACCEPTED</span>
+                                <span th:if="${d.status.name() == 'EXPIRED'}" class="badge badge-status badge-expired">EXPIRED</span>
+                                <span th:if="${d.status.name() == 'DELIVERED'}" class="badge badge-status badge-delivered">DELIVERED</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
