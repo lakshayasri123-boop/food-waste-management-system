@@ -1,0 +1,97 @@
+    <div class="container py-5">
+        <!-- Flash messages -->
+        <div th:if="${success}" class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i><span th:text="${success}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i><span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <!-- Metrics Cards -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-3">
+                <div class="glass-card p-4 text-center">
+                    <div class="text-secondary small mb-1">Total Users</div>
+                    <div class="fs-2 fw-bold text-white" th:text="${reports.totalUsers}">0</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="glass-card p-4 text-center">
+                    <div class="text-secondary small mb-1">Registered Donors</div>
+                    <div class="fs-2 fw-bold text-success" th:text="${reports.totalDonors}">0</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="glass-card p-4 text-center">
+                    <div class="text-secondary small mb-1">Registered NGOs</div>
+                    <div class="fs-2 fw-bold text-primary" th:text="${reports.totalNGOs}">0</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="glass-card p-4 text-center">
+                    <div class="text-secondary small mb-1">Food Donations</div>
+                    <div class="fs-2 fw-bold text-warning" th:text="${reports.totalDonations}">0</div>
+                </div>
+            </div>
+                                            <td class="text-secondary" th:text="${n.user.email}">email@ngo.org</td>
+                                <td class="text-light" th:text="${n.user.phone}">9876543210</td>
+                                <td><span class="badge badge-status badge-pending">PENDING</span></td>
+                                <td class="text-end">
+                                    <form th:action="@{'/admin/verify-ngo/' + ${n.ngoId}}" method="post" class="d-inline">
+                                        <input type="hidden" name="status" value="VERIFIED">
+                                        <button type="submit" class="btn btn-emerald btn-sm me-1"><i class="bi bi-check-lg"></i> Approve</button>
+                                    </form>
+                                    <form th:action="@{'/admin/verify-ngo/' + ${n.ngoId}}" method="post" class="d-inline">
+                                        <input type="hidden" name="status" value="REJECTED">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm"><i class="bi bi-x-lg"></i> Reject</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- All System Users -->
+        <div>
+            <h3 class="text-white fw-bold mb-3"><i class="bi bi-people text-success me-2"></i> All Registered Accounts</h3>
+            <div class="glass-card p-4">
+                <div class="table-responsive">
+                    <table class="table table-custom table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>#ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th class="text-end">Manage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="u : ${users}">
+                                <td class="fw-bold text-secondary" th:text="'#' + ${u.id}">#1</td>
+                                <td class="text-white fw-medium" th:text="${u.name}">User Name</td>
+                                <td class="text-secondary" th:text="${u.email}">user@email.com</td>
+                                <td>
+                                    <span class="badge bg-secondary" th:text="${u.role}">DONOR</span>
+                                </td>
+                                <td class="text-light" th:text="${u.phone}">9876543210</td>
+                                <td class="text-secondary" th:text="${u.address}">City</td>
+                                <td class="text-end">
+                                    <form th:if="${u.role.name() != 'ADMIN'}" th:action="@{'/admin/delete-user/' + ${u.id}}" method="post" class="d-inline" onsubmit="return confirm('Delete this user account?');">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i> Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
