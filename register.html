@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - FoodWasteDonation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body class="d-flex align-items-center justify-content-center py-5">
+    <div class="container" style="max-width: 540px;">
+        <div class="text-center mb-4">
+            <a href="/" class="brand-text text-decoration-none fs-2 fw-bold">
+                <i class="bi bi-heart-pulse-fill text-success me-2"></i>FoodWasteDonation
+            </a>
+            <p class="text-secondary mt-1">Create an account to get started</p>
+        </div>
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i><span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <div class="glass-card p-4 p-md-5">
+            <form th:action="@{/register}" method="post" th:object="${user}">
+                <div class="mb-3">
+                    <label class="form-label text-light fw-medium">Full Name</label>
+                    <input type="text" th:field="*{name}" class="form-control form-control-custom" placeholder="John Doe" required>
+                </div>
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label text-light fw-medium">Email Address</label>
+                        <input type="email" th:field="*{email}" class="form-control form-control-custom" placeholder="name@example.com" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-light fw-medium">Password</label>
+                        <input type="password" th:field="*{password}" class="form-control form-control-custom" placeholder="••••••••" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label text-light fw-medium">Role</label>
+                    <select th:field="*{role}" id="roleSelect" class="form-select form-select-custom" required onchange="toggleRoleFields()">
+                        <option value="DONOR">DONOR (Hotel / Restaurant / Individual)</option>
+                        <option value="NGO">NGO (Non-Profit Organization)</option>
+                        <option value="ADMIN">ADMIN</option>
+                    </select>
+                </div>
+                                  <div class="col-md-6">
+                        <label class="form-label text-light fw-medium">Address</label>
+                        <input type="text" th:field="*{address}" class="form-control form-control-custom" placeholder="City, Street address" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-emerald w-100 py-3 mb-3">
+                    <i class="bi bi-person-plus-fill me-2"></i> Register Account
+                </button>
+                <div class="text-center">
+                    <span class="text-secondary">Already registered? </span>
+                    <a href="/login" class="text-success text-decoration-none fw-bold">Login here</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        function toggleRoleFields() {
+            const role = document.getElementById('roleSelect').value;
+            const orgGroup = document.getElementById('orgGroup');
+            const orgLabel = document.getElementById('orgLabel');
+            
+            if (role === 'DONOR') {
+                orgGroup.style.display = 'block';
+                orgLabel.innerText = 'Organization / Business Name';
+            } else if (role === 'NGO') {
+                orgGroup.style.display = 'block';
+                orgLabel.innerText = 'Official NGO Name';
+            } else {
+                orgGroup.style.display = 'none';
+            }
+        }
+        toggleRoleFields();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+              
