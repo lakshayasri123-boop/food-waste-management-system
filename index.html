@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodWasteDonation - Bridge Surplus Food to Those in Need</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom py-3 sticky-top">
+        <div class="container">
+            <a class="navbar-brand brand-text d-flex align-items-center gap-2" href="/">
+                <i class="bi bi-heart-pulse-fill text-success"></i> FoodWasteDonation
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center gap-3">
+                    <li class="nav-item"><a class="nav-link text-light" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link text-light" href="#how-it-works">How It Works</a></li>
+                    <th:block th:if="${user == null}">
+                        <li class="nav-item"><a class="btn btn-outline-custom text-light" href="/login">Login</a></li>
+                        <li class="nav-item"><a class="btn btn-emerald" href="/register">Register</a></li>
+                    </th:block>
+                    <th:block th:if="${user != null}">
+                       <li class="nav-item">
+                            <span class="text-secondary">Welcome, <strong class="text-light" th:text="${user.name}">User</strong></span>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-emerald" th:if="${user.role.name() == 'DONOR'}" href="/donor/dashboard">Dashboard</a>
+                            <a class="btn btn-emerald" th:if="${user.role.name() == 'NGO'}" href="/ngo/dashboard">Dashboard</a>
+                            <a class="btn btn-emerald" th:if="${user.role.name() == 'ADMIN'}" href="/admin/dashboard">Dashboard</a>
+                        </li>
+                        <li class="nav-item"><a class="btn btn-outline-danger btn-sm" href="/logout">Logout</a></li>
+                    </th:block>
+                </ul>
+            </div>
+        </div>
+    </nav>
+              <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <span class="badge bg-success bg-opacity-20 text-success border border-success mb-3 px-3 py-2 rounded-pill">
+                        <i class="bi bi-shield-check me-1"></i> Zero Waste • Maximum Impact
+                    </span>
+                    <h1 class="hero-title text-white mb-4">
+                        Turn Surplus Food Into <br>
+                        <span class="brand-text">Nourishment For All</span>
+                    </h1>
+                    <p class="lead text-secondary mb-5 fs-5">
+                        A real-time smart platform connecting hotels, restaurants, and donors with verified NGOs to eliminate food waste and fight hunger.
+                    </p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="/register" class="btn btn-emerald btn-lg px-4 py-3"><i class="bi bi-box-arrow-in-right me-2"></i> Join as Donor / NGO</a>
+                        <a href="/login" class="btn btn-outline-custom btn-lg px-4 py-3"><i class="bi bi-box-arrow-in-right me-2"></i> Portal Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Key Modules -->
+    <section class="py-5" id="how-it-works">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="glass-card p-4 h-100">
+                        <div class="fs-1 text-success mb-3"><i class="bi bi-shop"></i></div>
+                        <h4 class="text-white">1. Donors Post Surplus</h4>
+                        <p class="text-secondary">Hotels, restaurants, and individuals list available fresh surplus food along with quantity, location, and expiry time.</p>
+                    </div>
+                   </div>
+                <div class="col-md-4">
+                    <div class="glass-card p-4 h-100">
+                        <div class="fs-1 text-primary mb-3"><i class="bi bi-building"></i></div>
+                        <h4 class="text-white">2. Verified NGOs Claim</h4>
+                        <p class="text-secondary">Admin-verified NGOs browse nearby available food postings and accept claims instantly for pick up.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="glass-card p-4 h-100">
+                        <div class="fs-1 text-warning mb-3"><i class="bi bi-truck"></i></div>
+                        <h4 class="text-white">3. Live Tracking</h4>
+                        <p class="text-secondary">Track food pickup from Available $\rightarrow$ Accepted $\rightarrow$ Pickup Started $\rightarrow$ Delivered with automated expiry protection.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="py-4 text-center text-secondary">
+        <div class="container">
+            <p class="mb-0">© 2026 FoodWasteDonation System. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+                  
+    
